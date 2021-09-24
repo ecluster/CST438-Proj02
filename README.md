@@ -8,3 +8,6 @@ Project 02 for course: CST438 at CSUMB
 
 ## Web App Navigation
 ![web_app_nav](https://user-images.githubusercontent.com/53790807/134642270-05c72754-3da9-47d5-9a1e-9c06ca530e7a.png)
+
+## Wirefram mockup
+![web_app_wire_frame](https://user-images.githubusercontent.com/53790807/134649099-5f667d54-3a52-4c32-9e38-4862b82ca1d5.png)
