@@ -17,3 +17,7 @@ Project 02 for course: CST438 at CSUMB
 
 ## ERD
 ![WishlistERD](https://user-images.githubusercontent.com/53790807/134728746-91a21d73-1bb2-4748-82e0-e75113e9ba0a.png)
+
+
+## UML
+![uml-diagram](https://user-images.githubusercontent.com/53790807/134736263-adf7694b-cca1-4c1a-b2f5-44ba6ed81142.png)
