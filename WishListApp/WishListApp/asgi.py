@@ -1,3 +1,4 @@
+#Test push to main
 """
 ASGI config for WishListApp project.
 
