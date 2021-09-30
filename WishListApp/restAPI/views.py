@@ -5,13 +5,17 @@ from .serializer import UserSerializer
 from .models import User
 import json
 
+
 # Create your views here.
 class UserList(APIView):
     def get(self, request):
-        user = User.objects.all()
-        query = self.request.GET.get('search')
-        if query is not None:
-            user = user.filter(name__contains=query) | user.filter(creator__contains=query)
-        serializer = UserSerializer(user, many=True)
-        return Response(serializer.data)
-
+        print("**************\n", request.method)
+        if request.method == "GET":
+            user = User.objects.all()
+            query = self.request.GET.get('search')
+            if query is not None:
+                user = user.filter(name__contains=query) | user.filter(creator__contains=query)
+            serializer = UserSerializer(user, many=True)
+            json_obj = json.dumps(serializer.data)
+            print(json_obj)
+            return Response(serializer.data)
