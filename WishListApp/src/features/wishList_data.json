@@ -1,0 +1,10 @@
+[
+  {
+    "model": "restAPI.Wishlist",
+    "fields": {
+      "wishListId": 1,
+      "userid": 1,
+      "password": 1
+    }
+  }
+]
