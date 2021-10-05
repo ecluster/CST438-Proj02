@@ -1,0 +1,29 @@
+[
+  {
+    "model": "restAPI.Item",
+    "fields": {
+      "itemId": 1,
+      "name": "iPhone",
+      "imageURL": "url",
+      "websiteURL": "url",
+    }
+  },
+  {
+    "model": "restAPI.Item",
+    "fields": {
+      "itemId": 2,
+      "name": "Computer",
+      "imageURL": "url",
+      "websiteURL": "url",
+    }
+  },
+  {
+    "model": "restAPI.Item",
+    "fields": {
+      "itemId": 3,
+      "name": "Shoes",
+      "imageURL": "url",
+      "websiteURL": "url",
+    }
+  }
+]
