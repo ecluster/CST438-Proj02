@@ -7,6 +7,9 @@ class User(models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.username
+
 
 class Item(models.Model):
     itemId = models.IntegerField()
@@ -14,8 +17,14 @@ class Item(models.Model):
     imageURL = models.CharField(max_length=100)
     websiteURL = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Wishlist(models.Model):
     wishListId = models.IntegerField()
     userid = models.IntegerField()
     password = models.IntegerField()
+
+    def __str__(self):
+        return self.wishListId
