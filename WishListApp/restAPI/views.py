@@ -4,7 +4,10 @@
 # from .serializer import UserSerializer
 # from .models import User
 # import json
+
 from django.shortcuts import render
+from django.urls import path
+from . import views
 
 # Create your views here.
 # class UserList(APIView):
@@ -19,7 +22,6 @@ from django.shortcuts import render
 #             json_obj = json.dumps(serializer.data)
 #             print(json_obj)
 #             return Response(serializer.data)
-
 
 def welcome(request):
     return render(request, 'welcome.html')
