@@ -28,3 +28,18 @@ def welcome(request):
 
 def login(request):
     return render(request, 'login.html')
+
+def createAccount(request):
+    return render(request, 'createAccount.html')
+
+def home(request):
+    return render(request, 'home.html')
+
+def addItems(request):
+    return render(request, 'addItems.html')
+
+def wishlist(request):
+    return render(request, 'wishlist.html')
+
+def userProfile(request):
+    return render(request, 'userProfile.html')
