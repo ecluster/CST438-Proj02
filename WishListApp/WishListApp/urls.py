@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('restAPI.urls')),
     path('admin/', admin.site.urls),
     path('users/', views.users_list, name='users'),
+    path('user-detail/<str:pk>/', views.user_detail, name='user-detail'),
 ]
