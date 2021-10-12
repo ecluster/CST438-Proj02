@@ -5,26 +5,62 @@ from .serializer import UserSerializer
 from .models import User
 import json
 
+from rest_framework.decorators import api_view
+
 from django.shortcuts import render
 from django.urls import path
 from . import views
 
-# Create your views here.
-class UserList(APIView):
-    def get(self, request):
-        print("**************\n", request.method)
-        if request.method == "GET":
-            user = User.objects.all()
-            query = self.request.GET.get('search')
-            if query is not None:
-                user = user.filter(name__contains=query) | user.filter(creator__contains=query)
-            serializer = UserSerializer(user, many=True)
-            json_obj = json.dumps(serializer.data)
-            print(json_obj)
+
+@api_view(['GET'])
+def users_list(request):
+    # List all code snippets
+    if request.method == 'GET':
+        user = User.objects.all()
+        serializer = UserSerializer(user, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
+
+@api_view(['GET', 'PATCH', 'DELETE'])
+def user_detail(request, pk):
+    # List all code snippets
+    if request.method == 'GET':
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
+    elif request.method == 'PATCH':
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        user = User.objects.get(id=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 def welcome(request):
     return render(request, 'welcome.html')
 
 def login(request):
     return render(request, 'login.html')
+
+def createAccount(request):
+    return render(request, 'createAccount.html')
+
+def home(request):
+    return render(request, 'home.html')
+
+def addItems(request):
+    return render(request, 'addItems.html')
+
+def wishlist(request):
+    return render(request, 'wishlist.html')
+
+def userProfile(request):
+    return render(request, 'userProfile.html')
