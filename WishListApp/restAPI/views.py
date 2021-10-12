@@ -22,6 +22,16 @@ def users_list(request):
         print(json_obj)
         return Response(serializer.data)
 
+@api_view(['GET'])
+def user_detail(request, pk):
+    # List all code snippets
+    if request.method == 'GET':
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
+
 def welcome(request):
     return render(request, 'welcome.html')
 
