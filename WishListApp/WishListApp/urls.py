@@ -22,5 +22,5 @@ from restAPI import views
 urlpatterns = [
     path('', include('restAPI.urls')),
     path('admin/', admin.site.urls),
-    path('users/', views.UserList.as_view()),
+    path('users/', views.users_list, name='users'),
 ]
