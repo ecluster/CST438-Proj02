@@ -24,7 +24,7 @@ class Item(models.Model):
 class Wishlist(models.Model):
     wishListId = models.IntegerField()
     userid = models.IntegerField()
-    password = models.IntegerField()
+    itemId = models.IntegerField()
 
     def __str__(self):
         return self.wishListId
