@@ -1,8 +1,8 @@
-<h1>Login page</h1>
-<a href="{% url 'welcome' %}">Welcome page</a>
-<br>
-<br>
-<a href="{% url 'createAccount' %}">Create account page</a>
-<br>
-<h2>When the user logs in, they should be taken to the home page. For now, here is a button to the home page.</h2>
-<a href="{% url 'home' %}">Home page</a>
+<h1 id="login-header">Login</h1>
+
+
+<form id="login-form">
+  <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+  <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+  <input type="submit" value="Login" id="login-form-submit">
+</form>
