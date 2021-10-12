@@ -22,7 +22,7 @@ def users_list(request):
         print(json_obj)
         return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'PATCH'])
 def user_detail(request, pk):
     # List all code snippets
     if request.method == 'GET':
@@ -31,6 +31,16 @@ def user_detail(request, pk):
         json_obj = json.dumps(serializer.data)
         print(json_obj)
         return Response(serializer.data)
+    elif request.method == 'PATCH':
+        user = User.objects.get(id=pk)
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 def welcome(request):
     return render(request, 'welcome.html')
