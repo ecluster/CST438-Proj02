@@ -22,7 +22,7 @@ def users_list(request):
         print(json_obj)
         return Response(serializer.data)
 
-@api_view(['GET', 'PATCH'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 def user_detail(request, pk):
     # List all code snippets
     if request.method == 'GET':
@@ -38,8 +38,10 @@ def user_detail(request, pk):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+    elif request.method == 'DELETE':
+        user = User.objects.get(id=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 def welcome(request):
