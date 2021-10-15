@@ -1,5 +1,5 @@
 """
-WSGI config for WishListApp project.
+WSGI config for MainApp project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WishListApp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MainApp.settings')
 
 application = get_wsgi_application()

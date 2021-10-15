@@ -1,6 +1,6 @@
 #Test push to main
 """
-ASGI config for WishListApp project.
+ASGI config for MainApp project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -12,6 +12,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WishListApp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MainApp.settings')
 
 application = get_asgi_application()
