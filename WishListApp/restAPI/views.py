@@ -23,23 +23,23 @@ def users_list(request):
         return Response(serializer.data)
 
 @api_view(['GET', 'PATCH', 'DELETE'])
-def user_detail(request, pk):
+def user_detail(request, uName):
     # List all code snippets
     if request.method == 'GET':
-        user = User.objects.get(id=pk)
+        user = User.objects.get(username=uName)
         serializer = UserSerializer(user, many=False)
         json_obj = json.dumps(serializer.data)
         print(json_obj)
         return Response(serializer.data)
     elif request.method == 'PATCH':
-        user = User.objects.get(id=pk)
+        user = User.objects.get(username=uName)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        user = User.objects.get(id=pk)
+        user = User.objects.get(username=uName)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

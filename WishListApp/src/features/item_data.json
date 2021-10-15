@@ -5,7 +5,7 @@
       "itemId": 1,
       "name": "iPhone",
       "imageURL": "url",
-      "websiteURL": "url",
+      "websiteURL": "url"
     }
   },
   {
@@ -14,7 +14,7 @@
       "itemId": 2,
       "name": "Computer",
       "imageURL": "url",
-      "websiteURL": "url",
+      "websiteURL": "url"
     }
   },
   {
@@ -23,7 +23,7 @@
       "itemId": 3,
       "name": "Shoes",
       "imageURL": "url",
-      "websiteURL": "url",
+      "websiteURL": "url"
     }
   }
 ]
