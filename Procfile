@@ -1,1 +1,1 @@
-web: gunicorn WishListApp.wsgi --log-file -
+web: gunicorn WishListApp.wsgi
