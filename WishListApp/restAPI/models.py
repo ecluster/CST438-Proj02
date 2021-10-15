@@ -26,5 +26,5 @@ class Wishlist(models.Model):
     userid = models.IntegerField()
     itemId = models.IntegerField()
 
-    def __str__(self):
+    def __int__(self):
         return self.wishListId
