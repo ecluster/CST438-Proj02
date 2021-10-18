@@ -2,7 +2,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import UserSerializer
+from .serializer import ItemSerializer
+from .serializer import WishListSerializer
 from .models import User
+from .models import Item
+from .models import Wishlist
 import json
 
 from rest_framework.decorators import api_view
@@ -10,6 +14,16 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 from django.urls import path
 from . import views
+
+
+@api_view(['GET'])
+def items_list(request, uId):
+    if request.method == 'GET':
+        wList = Wishlist.objects.filter(userid=uId)
+        serializer1 = WishListSerializer(wList, many=True)
+        json1 = json.dumps(serializer1.data)
+        print("Wishlists:\n", json1)
+        return Response(serializer1.data)
 
 
 @api_view(['GET'])
@@ -22,6 +36,7 @@ def users_list(request):
         print(json_obj)
         print("******")
         return Response(serializer.data)
+
 
 @api_view(['GET', 'PATCH', 'DELETE'])
 def user_detail(request, uName):
@@ -48,20 +63,26 @@ def user_detail(request, uName):
 def welcome(request):
     return render(request, 'welcome.html')
 
+
 def login(request):
     return render(request, 'login.html')
+
 
 def createAccount(request):
     return render(request, 'createAccount.html')
 
+
 def home(request):
     return render(request, 'home.html')
+
 
 def addItems(request):
     return render(request, 'addItems.html')
 
+
 def wishlist(request):
     return render(request, 'wishlist.html')
+
 
 def userProfile(request):
     return render(request, 'userProfile.html')
