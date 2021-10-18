@@ -20,6 +20,7 @@ def users_list(request):
         serializer = UserSerializer(user, many=True)
         json_obj = json.dumps(serializer.data)
         print(json_obj)
+        print("******")
         return Response(serializer.data)
 
 @api_view(['GET', 'PATCH', 'DELETE'])
