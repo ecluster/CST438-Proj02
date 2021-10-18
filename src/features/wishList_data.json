@@ -4,7 +4,7 @@
     "fields": {
       "wishListId": 1,
       "userid": 1,
-      "password": 1
+      "itemId": 1
     }
   }
 ]
