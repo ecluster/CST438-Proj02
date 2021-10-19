@@ -8,5 +8,5 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('addItems/', views.addItems, name='addItems'),
     path('wishlist/', views.wishlist, name='wishlist'),
-    path('userProfile/', views.userProfile, name='userProfile'),
+    path('userProfile/<str:pk>/', views.userProfile, name='userProfile'),
 ]

@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializer import UserSerializer
 from .models import User
+from django.shortcuts import render, redirect
 import json
+from .forms import UserForm
 
 from rest_framework.decorators import api_view
 
@@ -51,7 +53,20 @@ def login(request):
     return render(request, 'login.html')
 
 def createAccount(request):
-    return render(request, 'createAccount.html')
+
+    form = UserForm()
+
+    if request.method == 'POST':
+        # print('Printing POST: ' , request.POST)
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save() #<- saves in the database
+            return redirect('/home/')
+
+
+    context = {'form': form}
+    return render(request, 'createAccount.html', context)
+
 
 def home(request):
     return render(request, 'home.html')
