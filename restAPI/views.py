@@ -8,7 +8,7 @@ from .models import User
 from .models import Item
 from .models import Wishlist
 import json
-#from .forms import UserForm
+from .forms import UserForm
 
 from rest_framework.decorators import api_view
 
