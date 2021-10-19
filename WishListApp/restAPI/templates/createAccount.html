@@ -4,4 +4,11 @@
 <br>
 <a href="{% url 'login' %}">Login page</a>
 <br>
+<br>
+
+<form action="" method ="POST" id = "createAccountForm">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type = "submit" name="CreateUserButton">
+</form>
 <h2>When the user successfuly registers, they should be able to log in.</h2>
