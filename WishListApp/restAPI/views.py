@@ -5,7 +5,7 @@ from .serializer import UserSerializer
 from .models import User
 from django.shortcuts import render, redirect
 import json
-from .forms import UserForm
+#from .forms import UserForm
 
 from rest_framework.decorators import api_view
 
@@ -46,8 +46,8 @@ def user_detail(request, uName):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-def welcome(request):
-    return render(request, 'welcome.html')
+def home(request):
+    return render(request, 'home.html')
 
 def login(request):
     return render(request, 'login.html')
@@ -66,10 +66,6 @@ def createAccount(request):
 
     context = {'form': form}
     return render(request, 'createAccount.html', context)
-
-
-def home(request):
-    return render(request, 'home.html')
 
 def addItems(request):
     return render(request, 'addItems.html')

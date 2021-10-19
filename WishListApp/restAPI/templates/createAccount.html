@@ -1,5 +1,8 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
 <h1>Create account</h1>
-<a href="{% url 'welcome' %}">Welcome page</a>
+<a href="{% url 'home' %}">Home page</a>
 <br>
 <br>
 <a href="{% url 'login' %}">Login page</a>
@@ -12,3 +15,4 @@
     <input type = "submit" name="CreateUserButton">
 </form>
 <h2>When the user successfuly registers, they should be able to log in.</h2>
+{% endblock #}
