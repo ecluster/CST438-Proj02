@@ -16,7 +16,7 @@ from django.shortcuts import render, redirect
 from django.urls import path
 from . import views
 
-
+# Show specific item
 @api_view(['GET', 'DELETE'])
 def delete_item(request, iId):
     if request.method == 'GET':
@@ -31,6 +31,7 @@ def delete_item(request, iId):
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# Show specific items of a wishlist from a user
 @api_view(['GET'])
 def wishlist_item_list(request, wId):
     if request.method == 'GET':
@@ -53,6 +54,7 @@ def wishlist_item_list(request, wId):
         return Response(data_obj)
 
 
+# Show all items saved by a user
 @api_view(['GET'])
 def items_list(request, uId):
     if request.method == 'GET':
@@ -75,7 +77,7 @@ def items_list(request, uId):
             data_obj.append(temp_json)
         return Response(data_obj)
 
-
+# Show all users
 @api_view(['GET'])
 def users_list(request):
     # List all code snippets
@@ -87,7 +89,7 @@ def users_list(request):
         print("******")
         return Response(serializer.data)
 
-
+# Show user detail
 @api_view(['GET', 'PATCH', 'DELETE'])
 def user_detail(request, uName):
     # List all code snippets
