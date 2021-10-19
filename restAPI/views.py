@@ -17,6 +17,20 @@ from django.urls import path
 from . import views
 
 
+@api_view(['GET', 'DELETE'])
+def delete_item(request, iId):
+    if request.method == 'GET':
+        item = Item.objects.get(itemId=iId)
+        serializer = ItemSerializer(item, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        item = Item.objects.get(itemId=iId)
+        item.delete()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def wishlist_item_list(request, wId):
     if request.method == 'GET':
