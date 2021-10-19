@@ -17,11 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 
-#from restAPI import views
+from restAPI import views
 
 urlpatterns = [
     path('', include('restAPI.urls')),
     path('admin/', admin.site.urls),
-    #path('users/', views.users_list, name='users'),
-    #path('user-detail/<str:uName>/', views.user_detail, name='user-detail'),
+    path('users/', views.users_list, name='users'),
+    path('user-detail/<str:uName>/', views.user_detail, name='user-detail'),
 ]
