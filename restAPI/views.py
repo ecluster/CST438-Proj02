@@ -18,6 +18,28 @@ from . import views
 
 
 @api_view(['GET'])
+def wishlist_item_list(request, wId):
+    if request.method == 'GET':
+        wList = Wishlist.objects.filter(wishListId=wId)
+        serializer1 = WishListSerializer(wList, many=True)
+        json1 = json.loads(json.dumps(serializer1.data))
+        print("Specific items from wishlist:", wId, "\n", json1)
+        item_id_list = []
+        for obj in json1:
+            print(obj["itemId"])
+            item_id_list.append(obj["itemId"])
+
+        data_obj = []
+        for id in item_id_list:
+            temp_Item = Item.objects.get(itemId=id)
+            temp_serializer = ItemSerializer(temp_Item, many=False)
+            temp_json = json.loads(json.dumps(temp_serializer.data))
+            print(temp_json)
+            data_obj.append(temp_json)
+        return Response(data_obj)
+
+
+@api_view(['GET'])
 def items_list(request, uId):
     if request.method == 'GET':
         wList = Wishlist.objects.filter(userid=uId)
