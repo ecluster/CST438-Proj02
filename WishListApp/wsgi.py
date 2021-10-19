@@ -1,5 +1,5 @@
 """
-WSGI config for WishListApp project.
+WSGI config for MainApp project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

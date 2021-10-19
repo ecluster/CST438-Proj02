@@ -1,6 +1,6 @@
 #Test push to main
 """
-ASGI config for WishListApp project.
+ASGI config for MainApp project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
