@@ -40,9 +40,23 @@ def item_detail(request, iId):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # Create an Item
+@api_view(['POST'])
+def create_item(request):
+    serializer = ItemSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # --------------------- Wishlist API --------------------------
 # Create a wishlist
+@api_view(['POST'])
+def create_wishlist(request):
+    serializer = WishListSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Show multiple wishlist --> by user ID
 @api_view(['GET'])
@@ -138,7 +152,7 @@ def user_detail(request, uName):
 
 
 # create a user
-@api_view(['POST'])
+# @api_view(['POST'])
 def createAccount(request):
     form = UserForm()
     if request.method == 'POST':

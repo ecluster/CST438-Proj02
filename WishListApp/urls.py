@@ -28,4 +28,6 @@ urlpatterns = [
     path('all-user-items/<str:uId>/', views.items_list, name='user-items'),
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
     path('item-detail/<str:iId>/', views.item_detail, name='item-detail'),
+    path('create-item/', views.create_item, name='create-item'),
+    path('create-wishlist/', views.create_wishlist, name='create-wishlist'),
 ]
