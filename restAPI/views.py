@@ -16,22 +16,45 @@ from django.shortcuts import render, redirect
 from django.urls import path
 from . import views
 
-# Show specific item
-@api_view(['GET', 'DELETE'])
-def delete_item(request, iId):
+# --------------------- Item API --------------------------
+# Show specific item / delete specific item --> by itemId
+@api_view(['GET', 'DELETE', 'PATCH'])
+def item_detail(request, iId):
     if request.method == 'GET':
         item = Item.objects.get(itemId=iId)
         serializer = ItemSerializer(item, many=False)
         json_obj = json.loads(json.dumps(serializer.data))
         print(json_obj)
         return Response(serializer.data)
+    elif request.method == 'PATCH':
+        item = Item.objects.get(itemId=iId)
+        serializer = ItemSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         item = Item.objects.get(itemId=iId)
         item.delete()
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# Show specific items of a wishlist from a user
+# Create an Item
+
+# --------------------- Wishlist API --------------------------
+# Create a wishlist
+
+# Show multiple wishlist --> by user ID
+@api_view(['GET'])
+def wishlist_user(request, uId):
+    if request.method == 'GET':
+        wList = Wishlist.objects.filter(userid=uId)
+        serializer1 = WishListSerializer(wList, many=True)
+        json1 = json.loads(json.dumps(serializer1.data))
+        print(json1)
+        return Response(serializer1.data)
+
+# Show specific items of a wishlist from a user --> by wishListId
 @api_view(['GET'])
 def wishlist_item_list(request, wId):
     if request.method == 'GET':
@@ -53,8 +76,7 @@ def wishlist_item_list(request, wId):
             data_obj.append(temp_json)
         return Response(data_obj)
 
-
-# Show all items saved by a user
+# Show all items saved --> by user ID
 @api_view(['GET'])
 def items_list(request, uId):
     if request.method == 'GET':
@@ -77,6 +99,9 @@ def items_list(request, uId):
             data_obj.append(temp_json)
         return Response(data_obj)
 
+
+
+# --------------------- User API --------------------------
 # Show all users
 @api_view(['GET'])
 def users_list(request):
@@ -89,7 +114,7 @@ def users_list(request):
         print("******")
         return Response(serializer.data)
 
-# Show user detail
+# Show user detail / delete user / update user --> by username
 @api_view(['GET', 'PATCH', 'DELETE'])
 def user_detail(request, uName):
     # List all code snippets
@@ -112,6 +137,21 @@ def user_detail(request, uName):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# create a user
+@api_view(['POST'])
+def createAccount(request):
+    form = UserForm()
+    if request.method == 'POST':
+        # print('Printing POST: ' , request.POST)
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save() #<- saves in the database
+            return redirect('../home/')
+
+    context = {'form': form}
+    return render(request, 'createAccount.html', context)
+
+
 def home(request):
     return render(request, 'home.html')
 
@@ -120,20 +160,6 @@ def login(request):
     return render(request, 'login.html')
 
 
-def createAccount(request):
-
-    form = UserForm()
-
-    if request.method == 'POST':
-        # print('Printing POST: ' , request.POST)
-        form = UserForm(request.POST)
-        if form.is_valid():
-            form.save() #<- saves in the database
-            return redirect('/home/')
-
-
-    context = {'form': form}
-    return render(request, 'createAccount.html', context)
 
 
 def addItems(request):
