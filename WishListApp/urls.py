@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', views.users_list, name='users'),
     path('user-detail/<str:uName>/', views.user_detail, name='user-detail'),
+    path('wishlist_user/<str:uId>/', views.wishlist_user, name='wishlist_user'),
     path('all-user-items/<str:uId>/', views.items_list, name='user-items'),
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
-    path('delete-item/<str:iId>/', views.delete_item, name='delete-item'),
+    path('item-detail/<str:iId>/', views.item_detail, name='item-detail'),
 ]
