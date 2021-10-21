@@ -18,6 +18,8 @@ from django.shortcuts import render, redirect
 from django.urls import path
 from . import views
 
+import requests
+
 # --------------------- Item API --------------------------
 # Show specific item / delete specific item --> by itemId
 @api_view(['GET', 'DELETE', 'PATCH'])
@@ -204,6 +206,10 @@ def addToWishlist(request):
     context = {'form': form}
     return render(request, 'addToWishlist.html', context)
 
+def adminHome(request):
+    url = 'http://127.0.0.1:8000/users/'
+    response = requests.get(url).json()
+    return render(request, 'AdminHome.html', {"allUsers" : response})
 
 def wishlist(request):
     return render(request, 'wishlist.html')
