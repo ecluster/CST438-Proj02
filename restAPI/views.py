@@ -9,6 +9,7 @@ from .models import Item
 from .models import Wishlist
 import json
 from .forms import UserForm
+from .forms import CreateItemForm
 
 from rest_framework.decorators import api_view
 
@@ -55,6 +56,7 @@ def create_wishlist(request):
     serializer = WishListSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        print(json.loads(json.dumps(serializer.data)))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -158,6 +160,7 @@ def createAccount(request):
     if request.method == 'POST':
         # print('Printing POST: ' , request.POST)
         form = UserForm(request.POST)
+        print(json.loads(json.dumps(form.data)))
         if form.is_valid():
             form.save() #<- saves in the database
             return redirect('../home/')
@@ -177,7 +180,17 @@ def login(request):
 
 
 def addItems(request):
-    return render(request, 'addItems.html')
+    form = CreateItemForm()
+    if request.method == 'POST':
+        # print('Printing POST: ' , request.POST)
+        form = CreateItemForm(request.POST)
+        print(json.loads(json.dumps(form.data)))
+        if form.is_valid():
+            form.save()  # <- saves in the database
+            return redirect('../home/')
+
+    context = {'form': form}
+    return render(request, 'addItems.html', context)
 
 
 def wishlist(request):

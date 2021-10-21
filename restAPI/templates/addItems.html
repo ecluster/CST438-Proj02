@@ -5,4 +5,10 @@
 <br>
 <a href="{% url 'wishlist' %}">Wishlist page</a>
 <br>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit", name="save">Create new Item</button>
+</form>
 {% endblock %}
