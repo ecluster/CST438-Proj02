@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Home</title>
+</head>
+<body>
+    <h1> Admin home! </h1>
+
+    {% block content %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>userId</th>
+                    <th>username</th>
+                    <th>password</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in allUsers %}
+                    <tr>
+                        <td><strong>{{i.id}} </strong></td>
+                        <td><strong>{{i.userId}} </strong></td>
+                        <td><strong>{{i.username}} </strong></td>
+                        <td><strong>{{i.password}} </strong></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock %}
+
+</body>
+</html>
