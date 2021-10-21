@@ -10,6 +10,7 @@ from .models import Wishlist
 import json
 from .forms import UserForm
 from .forms import CreateItemForm
+from .forms import AddtoWislistForm
 
 from rest_framework.decorators import api_view
 
@@ -177,8 +178,6 @@ def login(request):
     return render(request, 'login.html')
 
 
-
-
 def addItems(request):
     form = CreateItemForm()
     if request.method == 'POST':
@@ -191,6 +190,19 @@ def addItems(request):
 
     context = {'form': form}
     return render(request, 'addItems.html', context)
+
+def addToWishlist(request):
+    form = AddtoWislistForm()
+    if request.method == 'POST':
+        # print('Printing POST: ' , request.POST)
+        form = AddtoWislistForm(request.POST)
+        print(json.loads(json.dumps(form.data)))
+        if form.is_valid():
+            form.save()  # <- saves in the database
+            return redirect('../home/')
+
+    context = {'form': form}
+    return render(request, 'addToWishlist.html', context)
 
 
 def wishlist(request):
