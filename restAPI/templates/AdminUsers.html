@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+
+    {% block content %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>userId</th>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>delete?</th>
+                    <th>update?</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in allUsers %}
+                    <tr>
+                        <td><strong> {{i.id}} </strong></td>
+                        <td><strong> {{i.userId}} </strong></td>
+                        <td><strong> {{i.username}} </strong></td>
+                        <td><strong> {{i.password}} </strong></td>
+                        <td><a href="../user-delete/{{i.username}}/"> Delete </a></td>
+                        <td>
+                            <a href="../user-update/{{i.username}}/"> Update </a>
+                            <form action="../user-update/{{i.username}}/" method="POST">
+                                {% csrf_token %}
+                                <input type='submit' value='Update'/>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock %}
+
+</body>
+</html>

@@ -22,11 +22,16 @@ from restAPI import views
 urlpatterns = [
     path('', include('restAPI.urls')),
     path('admin/', admin.site.urls),
+
     path('users/', views.users_list, name='users'),
     path('user-detail/<str:uName>/', views.user_detail, name='user-detail'),
+    path('user-delete/<str:uName>/', views.deleteUser, name='user-delete'),
+    path('user-update/<str:uName>/', views.updateUser, name='user-update'),
+
     path('wishlist_user/<str:uId>/', views.wishlist_user, name='wishlist_user'),
     path('all-user-items/<str:uId>/', views.items_list, name='user-items'),
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
+
     path('item-detail/<str:iId>/', views.item_detail, name='item-detail'),
     path('create-item/', views.create_item, name='create-item'),
     path('create-wishlist/', views.create_wishlist, name='create-wishlist'),
