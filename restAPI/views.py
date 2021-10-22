@@ -153,7 +153,6 @@ def deleteUser(request, uName):
         serializer = UserSerializer(user, many=False)
         json_obj = json.loads(json.dumps(serializer.data))
         print(json_obj)
-
         return render(request, 'AdminDelete.html', {"user" : user})
     if request.method == 'POST':
         user = User.objects.get(username=uName)
@@ -168,14 +167,14 @@ def updateUser(request, uName):
         serializer = UserSerializer(user, many=False)
         json_obj = json.dumps(serializer.data)
         print(json_obj)
-        return Response(serializer.data)
-    elif request.method == 'PATCH':
+        return render(request, 'AdminUpdate.html', {'user' : user})
+    elif request.method == 'POST':
         user = User.objects.get(username=uName)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return render(request, 'AdminHome.html')
+        return render(request, 'AdminHome.html')
 
 # create a user
 # @api_view(['POST'])
@@ -237,6 +236,9 @@ def adminUsers(request):
 
 def adminDelete(request):
     return render(request, 'AdminDelete.hmtl')
+
+def adminUpdate(request):
+    return render(request, 'AdminUpdate.hmtl')
 
 def wishlist(request):
     return render(request, 'wishlist.html')

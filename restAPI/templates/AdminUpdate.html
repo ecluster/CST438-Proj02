@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+</head>
+<body>
+
+    <a href="../../AdminHome">Go Home</a>
+
+    <form action="../../user-update/{{user.username}}/" method="POST">
+        {% csrf_token %}
+        <input type="text" name="userId" value="{{user.userId}}" placeholder="UserId">
+        <input type="text" name="username" value="{{user.username}}" placeholder="Username">
+        <input type="text" name="password" value="{{user.password}}" placeholder="Password">
+        <input type='submit' value='Update'/>
+    </form>
+</body>
+</html>

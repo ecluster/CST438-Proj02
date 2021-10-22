@@ -5,7 +5,7 @@
     <title>All Users</title>
 </head>
 <body>
-
+    <a href="../../AdminHome">Go Home</a>
     {% block content %}
 
         <table>
@@ -28,13 +28,7 @@
                         <td><strong> {{i.username}} </strong></td>
                         <td><strong> {{i.password}} </strong></td>
                         <td><a href="../user-delete/{{i.username}}/"> Delete </a></td>
-                        <td>
-                            <a href="../user-update/{{i.username}}/"> Update </a>
-                            <form action="../user-update/{{i.username}}/" method="POST">
-                                {% csrf_token %}
-                                <input type='submit' value='Update'/>
-                            </form>
-                        </td>
+                        <td><a href="../user-update/{{i.username}}/"> Update </a></td>
                     </tr>
                 {% endfor %}
             </tbody>
