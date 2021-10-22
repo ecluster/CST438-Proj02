@@ -6,7 +6,7 @@ from .models import User
 from django.shortcuts import render, redirect
 import json
 from .forms import UserForm
-
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.decorators import api_view
 
 from django.shortcuts import render
@@ -46,10 +46,24 @@ def user_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-def welcome(request):
-    return render(request, 'welcome.html')
+def loginPage(request):
+    print("got to page")
 
-def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        print("here")
+        if user is not None:
+            print("should redirect")
+            login(request, user)
+            return redirect('/home/')
+        else:
+            print("did not redirect")
+            return render(request, 'login.html')
+
+
     return render(request, 'login.html')
 
 def createAccount(request):
@@ -61,7 +75,7 @@ def createAccount(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save() #<- saves in the database
-            return redirect('/home/')
+            return redirect('/login/')
 
 
     context = {'form': form}
