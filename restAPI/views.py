@@ -134,7 +134,7 @@ def users_list(request):
         return Response(serializer.data)
 
 # Show user detail / delete user / update user --> by username
-@api_view(['GET', 'PATCH', 'DELETE'])
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
 def user_detail(request, uName):
     # List all code snippets
     if request.method == 'GET':
@@ -143,18 +143,38 @@ def user_detail(request, uName):
         json_obj = json.dumps(serializer.data)
         print(json_obj)
         return Response(serializer.data)
-    elif request.method == 'PATCH':
+
+
+# Delete a user
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def deleteUser(request, uName):
+    if request.method == 'GET':
+        user = User.objects.get(username=uName)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminDelete.html', {"user" : user})
+    if request.method == 'POST':
+        user = User.objects.get(username=uName)
+        user.delete()
+        return render(request, 'AdminHome.html')
+
+# Update a user
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def updateUser(request, uName):
+    if request.method == 'GET':
+        user = User.objects.get(username=uName)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return render(request, 'AdminUpdate.html', {'user' : user})
+    elif request.method == 'POST':
         user = User.objects.get(username=uName)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
-        user = User.objects.get(username=uName)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
+            return render(request, 'AdminHome.html')
+        return render(request, 'AdminHome.html')
 
 # create a user
 # @api_view(['POST'])
@@ -207,9 +227,18 @@ def addToWishlist(request):
     return render(request, 'addToWishlist.html', context)
 
 def adminHome(request):
+    return render(request, 'AdminHome.html')
+
+def adminUsers(request):
     url = 'http://127.0.0.1:8000/users/'
-    response = requests.get(url).json()
-    return render(request, 'AdminHome.html', {"allUsers" : response})
+    obj = requests.get(url).json()
+    return render(request, 'AdminUsers.html', {"allUsers" : obj})
+
+def adminDelete(request):
+    return render(request, 'AdminDelete.hmtl')
+
+def adminUpdate(request):
+    return render(request, 'AdminUpdate.hmtl')
 
 def wishlist(request):
     return render(request, 'wishlist.html')

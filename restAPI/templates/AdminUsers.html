@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+    <a href="../../AdminHome">Go Home</a>
+    {% block content %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>userId</th>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>delete?</th>
+                    <th>update?</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in allUsers %}
+                    <tr>
+                        <td><strong> {{i.id}} </strong></td>
+                        <td><strong> {{i.userId}} </strong></td>
+                        <td><strong> {{i.username}} </strong></td>
+                        <td><strong> {{i.password}} </strong></td>
+                        <td><a href="../user-delete/{{i.username}}/"> Delete </a></td>
+                        <td><a href="../user-update/{{i.username}}/"> Update </a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock %}
+
+</body>
+</html>
