@@ -345,7 +345,9 @@ def createAccount(request):
 
 
 def home(request):
-    return render(request, 'home.html')
+    url = 'http://127.0.0.1:8000/all-user-items/1/'
+    obj = requests.get(url).json()
+    return render(request, 'home.html', {'allItems' : obj})
 
 def addItems(request):
     form = CreateItemForm()
