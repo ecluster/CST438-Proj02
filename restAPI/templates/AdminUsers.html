@@ -3,36 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>All Users</title>
+
+    <style>
+        .table-box{
+          display: flex;
+          justify-content: center;
+          margin: 25px 15px 15px 15px;
+        }
+
+        .content-table{
+          border-collapse: collapse;
+          margin: 25px 0;
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 0.9em;
+          min-width: 400px;
+          border-radius: 5px 5px 0 0;
+          overflow: hidden;
+          box-shadow: 0 0 20px gray;
+        }
+
+        .content-table thead tr{
+          background-color: #C22F4C;
+          color: white;
+          text-align: left;
+          font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+          padding: 15px 10px;
+        }
+
+        .content-table tbody tr{
+          border-bottom: 1px solid #dddddd;
+          background-color: gainsboro;
+        }
+
+        .content-table tbody tr:nth-of-type(even){
+          background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type{
+          border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+          font-weight: bold;
+          color: #C22F4C;
+        }
+
+    </style>
 </head>
 <body>
     <a href="../../AdminHome">Go Home</a>
     {% block content %}
 
-        <table>
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>userId</th>
-                    <th>username</th>
-                    <th>password</th>
-                    <th>delete?</th>
-                    <th>update?</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for i in allUsers %}
+        <div class="table-box">
+            <table class="content-table">
+                <thead>
                     <tr>
-                        <td><strong> {{i.id}} </strong></td>
-                        <td><strong> {{i.userId}} </strong></td>
-                        <td><strong> {{i.username}} </strong></td>
-                        <td><strong> {{i.password}} </strong></td>
-                        <td><a href="../user-delete/{{i.username}}/"> Delete </a></td>
-                        <td><a href="../user-update/{{i.username}}/"> Update </a></td>
+                        <th>id</th>
+                        <th>userId</th>
+                        <th>username</th>
+                        <th>password</th>
+                        <th>delete?</th>
+                        <th>update?</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    {% for i in allUsers %}
+                        <tr class="active-row">
+                            <td><strong> {{i.id}} </strong></td>
+                            <td><strong> {{i.userId}} </strong></td>
+                            <td><strong> {{i.username}} </strong></td>
+                            <td><strong> {{i.password}} </strong></td>
+                            <td><a href="../user-delete/{{i.username}}/"> Delete </a></td>
+                            <td><a href="../user-update/{{i.username}}/"> Update </a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
     {% endblock %}
 
