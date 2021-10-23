@@ -14,8 +14,8 @@ class User(models.Model):
 class Item(models.Model):
     itemId = models.IntegerField()
     name = models.CharField(max_length=100)
-    imageURL = models.CharField(max_length=100)
-    websiteURL = models.CharField(max_length=100)
+    imageURL = models.CharField(max_length=2000)
+    websiteURL = models.CharField(max_length=2000)
 
     def __str__(self):
         return self.name
