@@ -23,6 +23,19 @@ from . import views
 import requests
 
 # --------------------- Item API --------------------------
+# show all items in data base
+# Show all users
+@api_view(['GET'])
+def items_list_api(request):
+    # List all code snippets
+    if request.method == 'GET':
+        item = Item.objects.all()
+        serializer = ItemSerializer(item, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        print("******")
+        return Response(serializer.data)
+
 # Show specific item / delete specific item --> by itemId
 @api_view(['GET', 'DELETE', 'PATCH'])
 def item_detail(request, iId):
@@ -44,6 +57,20 @@ def item_detail(request, iId):
         item.delete()
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+# Delete an Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def deleteItem(request, iId):
+    if request.method == 'GET':
+        item = Item.objects.get(itemId=iId)
+        serializer = ItemSerializer(item, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminItemDelete.html', {"item": item})
+    if request.method == 'POST':
+        item = Item.objects.get(itemId=iId)
+        item.delete()
+        return render(request, 'AdminHome.html')
 
 
 # Create an Item
@@ -278,8 +305,17 @@ def adminUsers(request):
     return render(request, 'AdminUsers.html', {"allUsers": obj})
 
 
+def adminItems(request):
+    url = 'http://127.0.0.1:8000/item-list-API/'
+    obj = requests.get(url).json()
+    return render(request, 'AdminItems.html', {"allItems": obj})
+
+
 def adminDelete(request):
     return render(request, 'AdminDelete.hmtl')
+
+def adminDeleteItems(request):
+    return render(request, 'AdminItemDelete.html')
 
 
 def adminUpdate(request):

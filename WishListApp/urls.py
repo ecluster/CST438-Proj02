@@ -34,7 +34,10 @@ urlpatterns = [
     path('all-user-items/<str:uId>/', views.items_list, name='user-items'),
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
 
+    path('item-list-API/', views.items_list_api, name='item-list-API'),
+    path('item-delete/<str:iId>/', views.deleteItem, name='item-delete'),
     path('item-detail/<str:iId>/', views.item_detail, name='item-detail'),
     path('create-item/', views.create_item, name='create-item'),
     path('create-wishlist/', views.create_wishlist, name='create-wishlist'),
+
 ]

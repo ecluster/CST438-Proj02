@@ -16,4 +16,7 @@ urlpatterns = [
     path('AdminUsers/', views.adminUsers, name='AdminUsers'),
     path('AdminDelete/', views.adminDelete, name='AdminDelete'),
     path('AdminUpdate/', views.adminUpdate, name='AdminUpdate'),
+    path('AdminItems/', views.adminItems, name='AdminItems'),
+    path('AdminItemDelete/', views.adminDeleteItems, name='AdminItemDelete'),
+
 ]
