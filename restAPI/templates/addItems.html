@@ -1,12 +1,10 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block body %}
-<h1>Add items page</h1>
-<br>
-<a href="{% url 'wishlist' %}">Wishlist page</a>
+<h1 style="text-align:center">Add Items</h1>
 <br>
 
-<form method="POST" action="">
+<form method="POST" action="" class="card-body text-center justify-content-center bg-secondary" style="color:white">
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit", name="save">Create new Item</button>
