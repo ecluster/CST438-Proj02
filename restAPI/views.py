@@ -20,6 +20,7 @@ from . import views
 
 import requests
 
+
 # --------------------- Item API --------------------------
 # Show specific item / delete specific item --> by itemId
 @api_view(['GET', 'DELETE', 'PATCH'])
@@ -43,6 +44,7 @@ def item_detail(request, iId):
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 # Create an Item
 @api_view(['POST'])
 def create_item(request):
@@ -51,6 +53,7 @@ def create_item(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # --------------------- Wishlist API --------------------------
 # Create a wishlist
@@ -63,6 +66,7 @@ def create_wishlist(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # Show multiple wishlist --> by user ID
 @api_view(['GET'])
 def wishlist_user(request, uId):
@@ -72,6 +76,7 @@ def wishlist_user(request, uId):
         json1 = json.loads(json.dumps(serializer1.data))
         print(json1)
         return Response(serializer1.data)
+
 
 # Show specific items of a wishlist from a user --> by wishListId
 @api_view(['GET'])
@@ -94,6 +99,7 @@ def wishlist_item_list(request, wId):
             print(temp_json)
             data_obj.append(temp_json)
         return Response(data_obj)
+
 
 # Show all items saved --> by user ID
 @api_view(['GET'])
@@ -119,7 +125,6 @@ def items_list(request, uId):
         return Response(data_obj)
 
 
-
 # --------------------- User API --------------------------
 # Show all users
 @api_view(['GET'])
@@ -132,6 +137,7 @@ def users_list(request):
         print(json_obj)
         print("******")
         return Response(serializer.data)
+
 
 # Show user detail / delete user / update user --> by username
 @api_view(['GET', 'PATCH', 'DELETE', 'POST'])
@@ -153,11 +159,22 @@ def deleteUser(request, uName):
         serializer = UserSerializer(user, many=False)
         json_obj = json.loads(json.dumps(serializer.data))
         print(json_obj)
-        return render(request, 'AdminDelete.html', {"user" : user})
+        return render(request, 'AdminDelete.html', {"user": user})
     if request.method == 'POST':
         user = User.objects.get(username=uName)
         user.delete()
         return render(request, 'AdminHome.html')
+
+
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def update_user(request, uId, uName, uPassword):
+    user = User.objects.get(username=uName)
+    user.userId = uId
+    user.username = uName
+    user.password = uPassword
+    user.save()
+    return Response(status=status.HTTP_202_ACCEPTED)
+
 
 # Update a user
 @api_view(['GET', 'PATCH', 'DELETE', 'POST'])
@@ -167,7 +184,7 @@ def updateUser(request, uName):
         serializer = UserSerializer(user, many=False)
         json_obj = json.dumps(serializer.data)
         print(json_obj)
-        return render(request, 'AdminUpdate.html', {'user' : user})
+        return render(request, 'AdminUpdate.html', {'user': user})
     elif request.method == 'POST':
         user = User.objects.get(username=uName)
         serializer = UserSerializer(user, data=request.data)
@@ -176,6 +193,7 @@ def updateUser(request, uName):
             print("Updating user:\n", json.loads(json.dumps(serializer.data)))
             return render(request, 'AdminHome.html')
         return render(request, 'AdminHome.html')
+
 
 # create a user
 # @api_view(['POST'])
@@ -186,7 +204,7 @@ def createAccount(request):
         form = UserForm(request.POST)
         print(json.loads(json.dumps(form.data)))
         if form.is_valid():
-            form.save() #<- saves in the database
+            form.save()  # <- saves in the database
             return redirect('../home/')
 
     context = {'form': form}
@@ -214,6 +232,7 @@ def addItems(request):
     context = {'form': form}
     return render(request, 'addItems.html', context)
 
+
 def addToWishlist(request):
     form = AddtoWislistForm()
     if request.method == 'POST':
@@ -227,19 +246,24 @@ def addToWishlist(request):
     context = {'form': form}
     return render(request, 'addToWishlist.html', context)
 
+
 def adminHome(request):
     return render(request, 'AdminHome.html')
+
 
 def adminUsers(request):
     url = 'http://127.0.0.1:8000/users/'
     obj = requests.get(url).json()
-    return render(request, 'AdminUsers.html', {"allUsers" : obj})
+    return render(request, 'AdminUsers.html', {"allUsers": obj})
+
 
 def adminDelete(request):
     return render(request, 'AdminDelete.hmtl')
 
+
 def adminUpdate(request):
     return render(request, 'AdminUpdate.hmtl')
+
 
 def wishlist(request):
     return render(request, 'wishlist.html')
