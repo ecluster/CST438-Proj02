@@ -82,6 +82,36 @@ def create_item(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Update an Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def update_item(request, iId, iName, iImgURl, iWebURL):
+    item = Item.objects.get(itemId=iId)
+    item.itemId = iId
+    item.name = iName
+    item.imageURL = iImgURl
+    item.websiteURL = iWebURL
+    item.save()
+    return Response(status=status.HTTP_202_ACCEPTED)
+# Update a Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def updateItem(request, iId):
+    if request.method == 'GET':
+        item = Item.objects.get(itemId=iId)
+        serializer = ItemSerializer(item, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminItemUpdate.html', {'item': item})
+    elif request.method == 'POST':
+        print("Post: ", json.loads(json.dumps(request.POST)))
+        obj = json.loads(json.dumps(request.POST))
+        obj_id = obj["itemId"]
+        obj_name = obj["name"]
+        obj_img = obj["imageURL"]
+        obj_web = obj["websiteURL"]
+        url = 'http://127.0.0.1:8000/item-change/{}/{}/{}/{}/'.format(obj_id, obj_name, obj_img, obj_web)
+        requests.post(url)
+        return render(request, 'AdminHome.html')
+
 
 # --------------------- Wishlist API --------------------------
 # Create a wishlist
@@ -320,6 +350,9 @@ def adminDeleteItems(request):
 
 def adminUpdate(request):
     return render(request, 'AdminUpdate.hmtl')
+
+def adminUpdateItems(request):
+    return render(request, 'AdminItemUpdate.html')
 
 
 def wishlist(request):

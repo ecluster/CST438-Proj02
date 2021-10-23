@@ -18,5 +18,6 @@ urlpatterns = [
     path('AdminUpdate/', views.adminUpdate, name='AdminUpdate'),
     path('AdminItems/', views.adminItems, name='AdminItems'),
     path('AdminItemDelete/', views.adminDeleteItems, name='AdminItemDelete'),
+    path('AdminItemUpdate/', views.adminUpdateItems, name='AdminItemUpdate'),
 
 ]

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Item</title>
+</head>
+<body>
+
+    <a href="../../AdminHome">Go Home</a>
+
+    <form action="../../item-update/{{item.itemId}}/" method="POST">
+        {% csrf_token %}
+        <input type="text" name="itemId" value="{{item.itemId}}" placeholder="itemId">
+        <input type="text" name="name" value="{{item.name}}" placeholder="name">
+        <input type="text" name="imageURL" value="{{item.imageURL}}" placeholder="imageURL">
+        <input type="text" name="websiteURL" value="{{item.websiteURL}}" placeholder="websiteURL">
+        <input type='submit' value='Update'/>
+    </form>
+
+</body>
+</html>
