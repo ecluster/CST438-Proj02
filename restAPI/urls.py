@@ -13,11 +13,15 @@ urlpatterns = [
     path('userProfile/<str:pk>', views.userProfile, name='userProfile'),
 
     path('AdminHome/', views.adminHome, name='AdminHome'),
+
     path('AdminUsers/', views.adminUsers, name='AdminUsers'),
     path('AdminDelete/', views.adminDelete, name='AdminDelete'),
     path('AdminUpdate/', views.adminUpdate, name='AdminUpdate'),
+
     path('AdminItems/', views.adminItems, name='AdminItems'),
     path('AdminItemDelete/', views.adminDeleteItems, name='AdminItemDelete'),
     path('AdminItemUpdate/', views.adminUpdateItems, name='AdminItemUpdate'),
 
+    path('AdminWishlist/', views.adminWishlist, name='AdminWishlist'),
+    path('AdminWishDelete/', views.adminDeleteWish, name='AdminWishDelete'),
 ]

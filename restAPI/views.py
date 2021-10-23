@@ -24,7 +24,6 @@ import requests
 
 # --------------------- Item API --------------------------
 # show all items in data base
-# Show all users
 @api_view(['GET'])
 def items_list_api(request):
     # List all code snippets
@@ -114,6 +113,18 @@ def updateItem(request, iId):
 
 
 # --------------------- Wishlist API --------------------------
+# show all wishlists in data base
+@api_view(['GET'])
+def wish_list_api(request):
+    # List all code snippets
+    if request.method == 'GET':
+        wish = Wishlist.objects.all()
+        serializer = WishListSerializer(wish, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        print("******")
+        return Response(serializer.data)
+
 # Create a wishlist
 @api_view(['POST'])
 def create_wishlist(request):
@@ -181,6 +192,20 @@ def items_list(request, uId):
             print(temp_json)
             data_obj.append(temp_json)
         return Response(data_obj)
+
+# Delete a user
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def deleteWish(request, wId):
+    if request.method == 'GET':
+        wish = Wishlist.objects.get(wishListId=wId)
+        serializer = WishListSerializer(wish, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminWishDelete.html', {"wish": wish})
+    if request.method == 'POST':
+        wish = Wishlist.objects.get(wishListId=wId)
+        wish.delete()
+        return render(request, 'AdminHome.html')
 
 
 # --------------------- User API --------------------------
@@ -340,12 +365,20 @@ def adminItems(request):
     obj = requests.get(url).json()
     return render(request, 'AdminItems.html', {"allItems": obj})
 
+def adminWishlist(request):
+    url = 'http://127.0.0.1:8000/wish-list-api/'
+    obj = requests.get(url).json()
+    return render(request, 'AdminWishlist.html', {"allWish": obj})
+
 
 def adminDelete(request):
     return render(request, 'AdminDelete.hmtl')
 
 def adminDeleteItems(request):
     return render(request, 'AdminItemDelete.html')
+
+def adminDeleteWish(request):
+    return render(request, 'AdminWishDelete.html')
 
 
 def adminUpdate(request):
