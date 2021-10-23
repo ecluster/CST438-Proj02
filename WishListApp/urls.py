@@ -33,8 +33,17 @@ urlpatterns = [
     path('wishlist_user/<str:uId>/', views.wishlist_user, name='wishlist_user'),
     path('all-user-items/<str:uId>/', views.items_list, name='user-items'),
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
+    path('wish-list-api/', views.wish_list_api, name='wish-list-api'),
+    path('wish-delete/<str:wId>/', views.deleteWish, name='wish-delete'),
+    path('wish-change/<str:wId>/<str:uId>/<str:iId>/', views.update_wish, name='wish-change'),
+    path('wish-update/<str:wId>/', views.updateWish, name='wish-update'),
 
+    path('item-list-API/', views.items_list_api, name='item-list-API'),
+    path('item-delete/<str:iId>/', views.deleteItem, name='item-delete'),
+    path('item-change/<str:iId>/<str:iName>/<str:iImgURl>/<str:iWebURL>/', views.update_item, name='item-change'),
+    path('item-update/<str:iId>/', views.updateItem, name='item-update'),
     path('item-detail/<str:iId>/', views.item_detail, name='item-detail'),
     path('create-item/', views.create_item, name='create-item'),
     path('create-wishlist/', views.create_wishlist, name='create-wishlist'),
+
 ]
