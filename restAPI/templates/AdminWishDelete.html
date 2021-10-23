@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Wish</title>
+</head>
+<body>
+    <a href="../../AdminHome">Go Home</a>
+    <h1>Deleting wish confirmation</h1>
+    <form action="../../wish-delete/{{wish.wishListId}}/" method="POST">
+        {% csrf_token %}
+        <input type='submit' value='Delete'/>
+    </form>
+</body>
+</html>

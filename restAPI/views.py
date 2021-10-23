@@ -23,6 +23,18 @@ from . import views
 import requests
 
 # --------------------- Item API --------------------------
+# show all items in data base
+@api_view(['GET'])
+def items_list_api(request):
+    # List all code snippets
+    if request.method == 'GET':
+        item = Item.objects.all()
+        serializer = ItemSerializer(item, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        print("******")
+        return Response(serializer.data)
+
 # Show specific item / delete specific item --> by itemId
 @api_view(['GET', 'DELETE', 'PATCH'])
 def item_detail(request, iId):
@@ -45,6 +57,20 @@ def item_detail(request, iId):
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# Delete an Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def deleteItem(request, iId):
+    if request.method == 'GET':
+        item = Item.objects.get(itemId=iId)
+        serializer = ItemSerializer(item, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminItemDelete.html', {"item": item})
+    if request.method == 'POST':
+        item = Item.objects.get(itemId=iId)
+        item.delete()
+        return render(request, 'AdminHome.html')
+
 
 # Create an Item
 @api_view(['POST'])
@@ -55,8 +81,78 @@ def create_item(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Update an Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def update_item(request, iId, iName, iImgURl, iWebURL):
+    item = Item.objects.get(itemId=iId)
+    item.itemId = iId
+    item.name = iName
+    item.imageURL = iImgURl
+    item.websiteURL = iWebURL
+    item.save()
+    return Response(status=status.HTTP_202_ACCEPTED)
+# Update a Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def updateItem(request, iId):
+    if request.method == 'GET':
+        item = Item.objects.get(itemId=iId)
+        serializer = ItemSerializer(item, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminItemUpdate.html', {'item': item})
+    elif request.method == 'POST':
+        print("Post: ", json.loads(json.dumps(request.POST)))
+        obj = json.loads(json.dumps(request.POST))
+        obj_id = obj["itemId"]
+        obj_name = obj["name"]
+        obj_img = obj["imageURL"]
+        obj_web = obj["websiteURL"]
+        url = 'http://127.0.0.1:8000/item-change/{}/{}/{}/{}/'.format(obj_id, obj_name, obj_img, obj_web)
+        requests.post(url)
+        return render(request, 'AdminHome.html')
+
 
 # --------------------- Wishlist API --------------------------
+# Update wishlist
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def update_wish(request, wId, uId, iId):
+    wish = Wishlist.objects.get(wishListId=wId)
+    wish.wishListId = wId
+    wish.userid = uId
+    wish.itemId = iId
+    wish.save()
+    return Response(status=status.HTTP_202_ACCEPTED)
+# Update a Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def updateWish(request, wId):
+    if request.method == 'GET':
+        wish = Wishlist.objects.get(wishListId=wId)
+        serializer = WishListSerializer(wish, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminWishUpdate.html', {'wish': wish})
+    elif request.method == 'POST':
+        print("Post: ", json.loads(json.dumps(request.POST)))
+        obj = json.loads(json.dumps(request.POST))
+        obj_id = obj["wishListId"]
+        obj_uId = obj["userid"]
+        obj_iId = obj["itemId"]
+        url = 'http://127.0.0.1:8000/wish-change/{}/{}/{}/'.format(obj_id, obj_uId, obj_iId)
+        requests.post(url)
+        return render(request, 'AdminHome.html')
+
+# show all wishlists in data base
+@api_view(['GET'])
+def wish_list_api(request):
+    # List all code snippets
+    if request.method == 'GET':
+        wish = Wishlist.objects.all()
+        serializer = WishListSerializer(wish, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        print("******")
+        return Response(serializer.data)
+
 # Create a wishlist
 @api_view(['POST'])
 def create_wishlist(request):
@@ -124,6 +220,20 @@ def items_list(request, uId):
             print(temp_json)
             data_obj.append(temp_json)
         return Response(data_obj)
+
+# Delete a user
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def deleteWish(request, wId):
+    if request.method == 'GET':
+        wish = Wishlist.objects.get(wishListId=wId)
+        serializer = WishListSerializer(wish, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminWishDelete.html', {"wish": wish})
+    if request.method == 'POST':
+        wish = Wishlist.objects.get(wishListId=wId)
+        wish.delete()
+        return render(request, 'AdminHome.html')
 
 
 # --------------------- User API --------------------------
@@ -278,12 +388,35 @@ def adminUsers(request):
     return render(request, 'AdminUsers.html', {"allUsers": obj})
 
 
+def adminItems(request):
+    url = 'http://127.0.0.1:8000/item-list-API/'
+    obj = requests.get(url).json()
+    return render(request, 'AdminItems.html', {"allItems": obj})
+
+def adminWishlist(request):
+    url = 'http://127.0.0.1:8000/wish-list-api/'
+    obj = requests.get(url).json()
+    return render(request, 'AdminWishlist.html', {"allWish": obj})
+
+
 def adminDelete(request):
     return render(request, 'AdminDelete.hmtl')
+
+def adminDeleteItems(request):
+    return render(request, 'AdminItemDelete.html')
+
+def adminDeleteWish(request):
+    return render(request, 'AdminWishDelete.html')
 
 
 def adminUpdate(request):
     return render(request, 'AdminUpdate.hmtl')
+
+def adminUpdateItems(request):
+    return render(request, 'AdminItemUpdate.html')
+
+def adminUpdateWish(request):
+    return render(request, 'AdminWishUpdate.html')
 
 
 def wishlist(request):
