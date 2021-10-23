@@ -1,18 +1,14 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block body %}
-<h1>Create account</h1>
-<a href="{% url 'home' %}">Home page</a>
-<br>
-<br>
-<a href="{% url 'login' %}">Login page</a>
-<br>
+<h1 style="text-align:center">Create account</h1>
 <br>
 
-<form action="" method ="POST" id = "createAccountForm">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type = "submit" name="CreateUserButton">
-</form>
-<h2>When the user successfuly registers, they should be able to log in.</h2>
+<div class = "card-body text-center justify-content-center bg-secondary" style="color:white"">
+    <form action="" method ="POST" id = "createAccountForm">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type = "submit" name="CreateUserButton">
+    </form>
+</div>
 {% endblock %}

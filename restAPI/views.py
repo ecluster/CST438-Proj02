@@ -7,10 +7,12 @@ from .serializer import WishListSerializer
 from .models import User
 from .models import Item
 from .models import Wishlist
+from django.contrib.auth import authenticate, login, logout
 import json
 from .forms import UserForm
 from .forms import CreateItemForm
 from .forms import AddtoWislistForm
+from django.contrib.auth.forms import UserCreationForm
 
 from rest_framework.decorators import api_view
 
@@ -196,29 +198,43 @@ def updateUser(request, uName):
         return render(request, 'AdminHome.html')
 
 
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def updateUserProfile(request, uName):
+    if request.method == 'GET':
+        user = User.objects.get(username=uName)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return render(request, 'userProfile.html', {'user' : user})
+    elif request.method == 'POST':
+        user = User.objects.get(username=uName)
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return render(request, 'home.html')
+        return render(request, 'home.html')
+
+
 # create a user
 # @api_view(['POST'])
 def createAccount(request):
-    form = UserForm()
+
+    form = UserCreationForm()
+
     if request.method == 'POST':
         # print('Printing POST: ' , request.POST)
         form = UserForm(request.POST)
-        print(json.loads(json.dumps(form.data)))
         if form.is_valid():
-            form.save()  # <- saves in the database
-            return redirect('../home/')
+
+            form.save() #<- saves in the database
+            return redirect('/login/')
+
 
     context = {'form': form}
     return render(request, 'createAccount.html', context)
 
-
 def home(request):
     return render(request, 'home.html')
-
-
-def login(request):
-    return render(request, 'login.html')
-
 
 def addItems(request):
     form = CreateItemForm()
@@ -269,6 +285,30 @@ def adminUpdate(request):
 def wishlist(request):
     return render(request, 'wishlist.html')
 
-
 def userProfile(request):
     return render(request, 'userProfile.html')
+
+def welcome(request):
+    return render(request, 'welcome.html')
+
+def loginPage(request):
+    print("got to page")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        print("here")
+        if user is not None:
+            print("should redirect")
+            login(request, user)
+            return redirect('/home/')
+        else:
+            print("did not redirect")
+            return render(request, 'login.html')
+    context = {}
+    return render(request, 'login.html')
+
+def logoutUser(request):
+    logout(request)
+    return redirect('/login')

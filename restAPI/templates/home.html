@@ -1,1 +1,10 @@
 {% extends "layout.html" %}
+{% block body %}
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        <h1 style="text-align:center">Home page</h1>
+        <h2 style="text-align:center">Welcome, <b>{{user.username}}</b></h2>
+    {% else %}
+        <h1 style="text-align:center">Please log in to access this page.</h1>
+    {% endif %}
+{% endblock %}

@@ -1,9 +1,14 @@
-<h1 id="login-header">Login</h1>
-
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+<h1 style="text-align:center">Login</h1>
 
 <form id="login-form" method = "POST">
   {% csrf_token %}
-  <input type="text" name="username" id="username"  placeholder="Username">
-  <input type="password" name="password" id="password" placeholder="Password">
-  <input type="submit" value="Login" id="login-form-submit">
+  <div class = "card-body text-center justify-content-center bg-secondary">
+    <input type="text" name="username" id="username"  placeholder="Username">
+    <input type="password" name="password" id="password" placeholder="Password">
+    <input type="submit" value="Login" id="login-form-submit">
+  </div>
 </form>
+{% endblock %}
