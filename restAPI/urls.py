@@ -12,6 +12,9 @@ urlpatterns = [
     path('wishlist/', views.wishlist, name='wishlist'),
     path('userProfile/<str:pk>', views.userProfile, name='userProfile'),
 
+    path('showSpecificItems/', views.showSpecificItems, name='showSpecificItems'),
+
+
     path('createAdmin/', views.createAdmin, name='createAdmin'),
     path('AdminHome/', views.adminHome, name='AdminHome'),
 

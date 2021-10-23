@@ -461,3 +461,8 @@ def createAdmin(request):
 
     context = {'form': form}
     return render(request, 'createAdminAccount.html', context)
+
+def showSpecificItems(request):
+    url = 'http://127.0.0.1:8000/specific-wishlitst-items/1/'
+    obj = requests.get(url).json()
+    return render(request, 'UserChoiceWish.html', {'allItems' : obj})
