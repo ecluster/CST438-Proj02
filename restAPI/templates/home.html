@@ -6,6 +6,10 @@
         <h2 style="text-align:center">Welcome, <b>{{user.username}}</b></h2>
         {% for i in allItems %}
             <h1> Item: {{i.id}}</h1>
+            <h1> Name: {{i.name}}</h1>
+            <h1> Image:</h1> <img width=300px, height=400px src="{{i.imageURL}}"/>
+            <h1> Website URL: {{i.websiteURL}}</h1>
+            <br>
         {% endfor %}
 
     {% else %}
