@@ -186,12 +186,13 @@ def updateUser(request, uName):
         print(json_obj)
         return render(request, 'AdminUpdate.html', {'user': user})
     elif request.method == 'POST':
-        user = User.objects.get(username=uName)
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            print("Updating user:\n", json.loads(json.dumps(serializer.data)))
-            return render(request, 'AdminHome.html')
+        print("Post: ", json.loads(json.dumps(request.POST)))
+        obj = json.loads(json.dumps(request.POST))
+        obj_id = obj["userId"]
+        obj_username = obj["username"]
+        obj_password = obj["password"]
+        url = 'http://127.0.0.1:8000/user-change/{}/{}/{}/'.format(obj_id, obj_username, obj_password)
+        requests.post(url)
         return render(request, 'AdminHome.html')
 
 
