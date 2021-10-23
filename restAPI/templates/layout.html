@@ -4,10 +4,12 @@
         <title>{% block title %}Wish List{% endblock %}</title>
     </head>
     <body>
-        <a href = "{% url 'home' %}">Home page</a>
+        <a href = "{% url 'welcome' %}">Welcome page</a>
+        {% block body %}
         <br>
         <a href = "{% url 'createAccount' %}">Create account page</a>
-        {% block body %}
+        <br>
+        <a href = "{% url 'login' %}">Login page</a>
         {% endblock %}
     </body>
 </html>
