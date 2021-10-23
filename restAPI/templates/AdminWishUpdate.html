@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist Update</title>
+</head>
+<body>
+
+    <a href="../../AdminHome">Go Home</a>
+
+    <form action="../../wish-update/{{wish.wishListId}}/" method="POST">
+        {% csrf_token %}
+        <input type="text" name="wishListId" value="{{wish.wishListId}}" placeholder="wishListId">
+        <input type="text" name="userid" value="{{wish.userid}}" placeholder="userid">
+        <input type="text" name="itemId" value="{{wish.itemId}}" placeholder="itemId">
+        <input type='submit' value='Update'/>
+    </form>
+
+</body>
+</html>

@@ -35,7 +35,8 @@ urlpatterns = [
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
     path('wish-list-api/', views.wish_list_api, name='wish-list-api'),
     path('wish-delete/<str:wId>/', views.deleteWish, name='wish-delete'),
-
+    path('wish-change/<str:wId>/<str:uId>/<str:iId>/', views.update_wish, name='wish-change'),
+    path('wish-update/<str:wId>/', views.updateWish, name='wish-update'),
 
     path('item-list-API/', views.items_list_api, name='item-list-API'),
     path('item-delete/<str:iId>/', views.deleteItem, name='item-delete'),

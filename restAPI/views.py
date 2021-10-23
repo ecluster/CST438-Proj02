@@ -113,6 +113,34 @@ def updateItem(request, iId):
 
 
 # --------------------- Wishlist API --------------------------
+# Update wishlist
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def update_wish(request, wId, uId, iId):
+    wish = Wishlist.objects.get(wishListId=wId)
+    wish.wishListId = wId
+    wish.userid = uId
+    wish.itemId = iId
+    wish.save()
+    return Response(status=status.HTTP_202_ACCEPTED)
+# Update a Item
+@api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+def updateWish(request, wId):
+    if request.method == 'GET':
+        wish = Wishlist.objects.get(wishListId=wId)
+        serializer = WishListSerializer(wish, many=False)
+        json_obj = json.loads(json.dumps(serializer.data))
+        print(json_obj)
+        return render(request, 'AdminWishUpdate.html', {'wish': wish})
+    elif request.method == 'POST':
+        print("Post: ", json.loads(json.dumps(request.POST)))
+        obj = json.loads(json.dumps(request.POST))
+        obj_id = obj["wishListId"]
+        obj_uId = obj["userid"]
+        obj_iId = obj["itemId"]
+        url = 'http://127.0.0.1:8000/wish-change/{}/{}/{}/'.format(obj_id, obj_uId, obj_iId)
+        requests.post(url)
+        return render(request, 'AdminHome.html')
+
 # show all wishlists in data base
 @api_view(['GET'])
 def wish_list_api(request):
@@ -386,6 +414,9 @@ def adminUpdate(request):
 
 def adminUpdateItems(request):
     return render(request, 'AdminItemUpdate.html')
+
+def adminUpdateWish(request):
+    return render(request, 'AdminWishUpdate.html')
 
 
 def wishlist(request):

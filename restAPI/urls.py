@@ -24,4 +24,5 @@ urlpatterns = [
 
     path('AdminWishlist/', views.adminWishlist, name='AdminWishlist'),
     path('AdminWishDelete/', views.adminDeleteWish, name='AdminWishDelete'),
+    path('AdminWishUpdate/', views.adminUpdateWish, name='AdminWishUpdate'),
 ]
