@@ -28,6 +28,8 @@ urlpatterns = [
     path('user-delete/<str:uName>/', views.deleteUser, name='user-delete'),
     path('user-update/<str:uName>/', views.updateUser, name='user-update'),
 
+    path('user-change/<str:uId>/<str:uName>/<str:uPassword>/', views.update_user, name='user-change'),
+
     path('wishlist_user/<str:uId>/', views.wishlist_user, name='wishlist_user'),
     path('all-user-items/<str:uId>/', views.items_list, name='user-items'),
     path('specific-wishlitst-items/<str:wId>/', views.wishlist_item_list, name='specific-wishlitst-items'),
