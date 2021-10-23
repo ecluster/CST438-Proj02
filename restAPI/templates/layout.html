@@ -1,15 +1,48 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <title>{% block title %}Wish List{% endblock %}</title>
+        <style>
+            .navbar {
+              background-color: #333;
+              overflow: hidden;
+            }
+
+            .navbar a {
+              float: left;
+              color: #f2f2f2;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+              font-size: 17px;
+            }
+
+            .navbar a:hover {
+              background-color: #ddd;
+              color: black;
+            }
+
+            .navbar a.active {
+              background-color: #04AA6D;
+              color: white;
+            }
+        </style>
     </head>
     <body>
-        <a href = "{% url 'welcome' %}">Welcome page</a>
+        <div class = "navbar">
+            <a href = "{% url 'welcome' %}">Welcome page</a>
+            <br>
+            <a href = "{% url 'createAccount' %}">Create account page</a>
+            <br>
+            <a href = "{% url 'login' %}">Login page</a>
+            <br>
+            <a href = "{% url 'home' %}">Home page</a>
+            <br>
+            <a href = "{% url 'logout' %}">Logout</a>
+            <br>
+        </div>
         {% block body %}
-        <br>
-        <a href = "{% url 'createAccount' %}">Create account page</a>
-        <br>
-        <a href = "{% url 'login' %}">Login page</a>
         {% endblock %}
     </body>
 </html>
