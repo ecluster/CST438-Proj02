@@ -175,6 +175,7 @@ def updateUser(request, uName):
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print("Updating user:\n", json.loads(json.dumps(serializer.data)))
             return render(request, 'AdminHome.html')
         return render(request, 'AdminHome.html')
 
