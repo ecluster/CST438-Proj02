@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Wishlists</title>
+</head>
+<body>
+
+<a href="../../AdminHome">Go Home</a>
+    {% block content %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>wishListId</th>
+                    <th>userid</th>
+                    <th>itemid</th>
+                    <th>delete?</th>
+                    <th>update?</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in allWish %}
+                    <tr>
+                        <td><strong> {{i.id}} </strong></td>
+                        <td><strong> {{i.wishListId}} </strong></td>
+                        <td><strong> {{i.userid}} </strong></td>
+                        <td><strong> {{i.itemId}} </strong></td>
+                        <td><a href="../wish-delete/{{i.wishListId}}/"> Delete </a></td>
+                        <td><a href="../wish-update/{{i.wishListId}}/"> Update </a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock %}
+
+</body>
+</html>
