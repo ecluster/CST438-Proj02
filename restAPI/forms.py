@@ -20,4 +20,8 @@ class AddtoWislistForm(ModelForm):
     class Meta:
         model = Wishlist
         fields = ['wishListId', 'userid', 'itemId']
+class User(ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
 

@@ -200,14 +200,19 @@ def updateUserProfile(request, uName):
 def createAccount(request):
 
     form = UserCreationForm()
-
     if request.method == 'POST':
-        # print('Printing POST: ' , request.POST)
         form = UserForm(request.POST)
+        #form.data['username']
+        #tempForm = User()
         if form.is_valid():
             form.save() #<- saves in the database
-            return redirect('/login/')
+            print(form.data)
+            User.objects.create(userId = form.data['userId'] ,
+                                username=form.data['username'],
+                                password= form.data['password1'])
 
+
+            return redirect('/login/')
     context = {'form': form}
     return render(request, 'createAccount.html', context)
 
@@ -264,7 +269,7 @@ def welcome(request):
     return render(request, 'welcome.html')
 
 def loginPage(request):
-    print("got to page")
+    #print("got to page")
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
