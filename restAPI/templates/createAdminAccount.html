@@ -6,7 +6,7 @@
 
 <div class = "card-body text-center justify-content-center bg-secondary" style="color:white"">
     <form action="" method ="POST" id = "createAdminForm">
-
+        <input type="int" name = "userId" >
         {% csrf_token %}
         {{form.as_p}}
         <input type = "submit" name="CreateUserButton">

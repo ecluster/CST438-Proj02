@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+<h1 style="text-align:center">Admin Login</h1>
+
+<form id="login-form" method = "POST">
+  {% csrf_token %}
+  <div class = "card-body text-center justify-content-center bg-secondary">
+    <input type="text" name="username" id="username"  placeholder="Username">
+    <input type="password" name="password" id="password" placeholder="Password">
+    <input type="submit" value="Login" id="login-form-submit">
+  </div>
+</form>
+{% endblock %}

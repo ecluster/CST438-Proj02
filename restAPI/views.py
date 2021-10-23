@@ -435,8 +435,13 @@ def loginPage(request):
         print("here")
         if user is not None:
             print("should redirect")
-            login(request, user)
-            return redirect('/home/')
+            if user.is_staff:
+                print("staff redirect")
+                login(request, user)
+                return redirect('/AdminHome/')
+            else:
+                login(request, user)
+                return redirect('/home/')
         else:
             print("did not redirect")
             return render(request, 'login.html')
@@ -448,19 +453,42 @@ def logoutUser(request):
     return redirect('/login')
 
 def createAdmin(request):
-    form = UserAdmin()
+    form = UserCreationForm()
     if request.method == 'POST':
+        # form = UserForm(request.POST)
+        # print(request.POST.get('username'))
+        # login(request, user)
         # print('Printing POST: ' , request.POST)
-        #form = UserForm(request.POST)
-        #print(request.POST.get('username'))
-        #login(request, user)
+        form = UserForm(request.POST)
         if form.is_valid():
-            form.save() #<- saves in the database
-            print(form.data)
+            form.save()  # <- saves in the database
+            User.objects.create(userId=form.data['userId'],
+                                username=form.data['username'],
+                                password=form.data['password1'])
+
+            userAdmin = authenticate(request, username=form.data['username'], password=form.data['password1'])
+            userAdmin.is_staff = True
+            userAdmin.save()
+            print(userAdmin.is_staff)
             return redirect('/AdminHome/')
 
     context = {'form': form}
     return render(request, 'createAdminAccount.html', context)
+
+def AdminLogin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            print("should redirect")
+            login(request, user)
+            return redirect('/AdminHome/')
+        else:
+            print("did not redirect")
+            return render(request, 'adminLogin.html')
+    context = {}
+    return render(request, 'adminLogin.html')
 
 def showSpecificItems(request):
     url = 'http://127.0.0.1:8000/specific-wishlitst-items/1/'
