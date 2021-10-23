@@ -451,7 +451,9 @@ def createAdmin(request):
     form = UserAdmin()
     if request.method == 'POST':
         # print('Printing POST: ' , request.POST)
-        form = UserForm(request.POST)
+        #form = UserForm(request.POST)
+        #print(request.POST.get('username'))
+        #login(request, user)
         if form.is_valid():
             form.save() #<- saves in the database
             print(form.data)
