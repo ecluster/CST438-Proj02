@@ -4,6 +4,8 @@ from rest_framework import status
 from .serializer import UserSerializer
 from .serializer import ItemSerializer
 from .serializer import WishListSerializer
+from .serializer import LogoutSerializer
+from .serializer import LoginSerializer
 from .models import User
 from .models import Item
 from .models import Wishlist
@@ -21,6 +23,24 @@ from django.urls import path
 from . import views
 
 import requests
+
+# --------------------- Login API --------------------------
+@api_view(['POST',])
+def login_api(request):
+    serializer = LoginSerializer(data=request.data)
+    data = {}
+    data['success'] = 'Login success'
+    return Response(data)
+
+@api_view(['POST',])
+def logout_api(request):
+    serializer = LogoutSerializer(data=request.data)
+    data = {}
+    del request.session['userId']
+    del request.session['username']
+    del request.session['password']
+    data['success'] = 'Logout success'
+    return Response(data)
 
 
 # --------------------- Item API --------------------------
@@ -291,24 +311,51 @@ def userProfile(request):
 def welcome(request):
     return render(request, 'welcome.html')
 
-def loginPage(request):
-    print("got to page")
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=username, password=password)
-        print("here")
-        if user is not None:
-            print("should redirect")
-            login(request, user)
+def loginPage2(request):
+    if request.method == "POST":
+        req = request.POST
+        url = 'http://127.0.0.1:8000/loginAPI/'
+        inputObj = {'username': req['username'], 'password': req['password']}
+        loginObj = requests.post(url, data=inputObj)
+        result = loginObj.json()
+        if 'success' in result:
+            userJSON = json.loads(json.dumps(req))
+            print(userJSON)
+            user = User.objects.get(username=userJSON['username'])
+            request.session['password'] = userJSON['password']
+            request.session['username'] = userJSON['username']
+            request.session['userId'] = user.userId
             return redirect('/home/')
-        else:
-            print("did not redirect")
-            return render(request, 'login.html')
-    context = {}
+
     return render(request, 'login.html')
+
+def logoutPage(request):
+    req = request.POST
+    url = 'http://127.0.0.1:8000/logoutAPI/'
+    print("*******************\n", req['username'])
+    inputObj = {'username': req['username'], 'password': req['password']}
+    x = requests.post(url, data=inputObj)
+    #response_data = x.json()
+    return render(request, 'login2.html')
+
+# def loginPage(request):
+#     print("got to page")
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#
+#         user = authenticate(request, username=username, password=password)
+#         print("here")
+#         if user is not None:
+#             print("should redirect")
+#             login(request, user)
+#             return redirect('/home/')
+#         else:
+#             print("did not redirect")
+#             return render(request, 'login.html')
+#     context = {}
+#     return render(request, 'login.html')
 
 def logoutUser(request):
     logout(request)
-    return redirect('/login')
+    return redirect('/login2')

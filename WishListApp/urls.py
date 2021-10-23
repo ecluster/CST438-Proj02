@@ -27,6 +27,9 @@ urlpatterns = [
     path('user-detail/<str:uName>/', views.user_detail, name='user-detail'),
     path('user-delete/<str:uName>/', views.deleteUser, name='user-delete'),
     path('user-update/<str:uName>/', views.updateUser, name='user-update'),
+    path('loginAPI/', views.login_api, name="loginAPI"),
+    path('logoutAPI/', views.logout_api, name="logoutAPI"),
+
 
     path('user-change/<str:uId>/<str:uName>/<str:uPassword>/', views.update_user, name='user-change'),
 
