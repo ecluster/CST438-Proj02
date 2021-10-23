@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+<h1 style="text-align:center">Create Admin account</h1>
+<br>
+
+<div class = "card-body text-center justify-content-center bg-secondary" style="color:white"">
+    <form action="" method ="POST" id = "createAdminForm">
+
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type = "submit" name="CreateUserButton">
+    </form>
+</div>
+{% endblock %}

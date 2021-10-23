@@ -12,6 +12,7 @@ import json
 from .forms import UserForm
 from .forms import CreateItemForm
 from .forms import AddtoWislistForm
+from .forms import UserAdmin
 from django.contrib.auth.forms import UserCreationForm
 
 from rest_framework.decorators import api_view
@@ -217,25 +218,21 @@ def updateUserProfile(request, uName):
 # create a user
 # @api_view(['POST'])
 def createAccount(request):
-
     form = UserCreationForm()
-
     if request.method == 'POST':
         # print('Printing POST: ' , request.POST)
         form = UserForm(request.POST)
         if form.is_valid():
-
             form.save() #<- saves in the database
             print(form.data)
             User.objects.create(userId = form.data['userId'] ,
                                 username=form.data['username'],
                                 password= form.data['password1'])
-
-
             return redirect('/login/')
 
     context = {'form': form}
     return render(request, 'createAccount.html', context)
+
 
 def home(request):
     return render(request, 'home.html')
@@ -316,3 +313,16 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('/login')
+
+def createAdmin(request):
+    form = UserAdmin()
+    if request.method == 'POST':
+        # print('Printing POST: ' , request.POST)
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save() #<- saves in the database
+            print(form.data)
+            return redirect('/AdminHome/')
+
+    context = {'form': form}
+    return render(request, 'createAdminAccount.html', context)

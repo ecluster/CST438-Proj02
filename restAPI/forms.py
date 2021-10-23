@@ -5,6 +5,9 @@ from.models import Wishlist
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.admin import UserAdmin
+from django.contrib import admin
+
 
 class UserForm(UserCreationForm):
     class Meta:
@@ -20,8 +23,8 @@ class AddtoWislistForm(ModelForm):
     class Meta:
         model = Wishlist
         fields = ['wishListId', 'userid', 'itemId']
-class User(ModelForm):
+class UserAdmin(UserCreationForm):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'password1', 'password2']
 
